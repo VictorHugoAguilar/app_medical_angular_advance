@@ -5,15 +5,13 @@
 
                 <h4 class="card-title">Striped Progress bar </h4>
                 <div class="progress m-t-20">
-                    <div class="progress-bar bg-primary progress-bar-striped active" style="height:10px;" role="progressbar">
+                    <div class="progress-bar bg-primary progress-bar-striped active" style="height:10px;" role="progressbar" [style.width]="getProgress_a()">
                     </div>
-                    <!-- [style.width]="getProgress()" -->
                 </div>
 
                 <div class="progress m-t-20">
-                    <div class="progress-bar bg-primary progress-bar-striped active" style="height:10px;" role="progressbar">
+                    <div class="progress-bar bg-success progress-bar-striped active" style="height:10px;" role="progressbar" [style.width]="getProgress_b()">
                     </div>
-                    <!-- [style.width]="getProgress()" -->
                 </div>
             </div>
 
@@ -26,7 +24,7 @@
     <div class="col-6">
         <div class="card">
             <div class="card-body">
-                <app-increments></app-increments>
+                <app-increments [progress]="progress_a" (valueSended)="progress_a = $event"></app-increments>
             </div>
         </div>
     </div>
@@ -34,7 +32,7 @@
     <div class="col-6">
         <div class="card">
             <div class="card-body">
-                <app-increments></app-increments>
+                <app-increments [btnClass]="'btn btn-success'" [progress]="progress_b" (valueSended)="progress_b = $event"></app-increments>
             </div>
         </div>
     </div>
