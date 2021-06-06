@@ -37,12 +37,8 @@ export class IncrementsComponent  {
       newValue = 100;
     }else if (newValue <= 0){
       newValue = 0;
-    }else{
-      this.progress = newValue;
     }
-
+    this.progress = newValue;
     this.valueSended.emit(this.progress);
   }
-
-
 }
