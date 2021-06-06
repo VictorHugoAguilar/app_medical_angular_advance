@@ -8,11 +8,12 @@ import { ProgressComponent } from './progress/progress.component';
 
 const routes: Routes = [
   {
-    path: '', component: PagesComponent, children: [
-      { path: 'dashboard', component: DashboardComponent },
+    path: 'dashboard/',
+    component: PagesComponent,
+    children: [
+      { path: '', component: DashboardComponent },
       { path: 'progress', component: ProgressComponent },
       { path: 'grafica1', component: Grafica1Component },
-      { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
     ]
   },
 ];
@@ -21,4 +22,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PagesRoutingModule {}
+export class PagesRoutingModule { }
