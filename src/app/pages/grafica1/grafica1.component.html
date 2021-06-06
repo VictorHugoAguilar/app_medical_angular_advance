@@ -1,14 +1,14 @@
 <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-
-                <div style="display: block">
-                    <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [colors]="colors" [chartType]="doughnutChartType">
-                </canvas>
-                </div>
-
-            </div>
-        </div>
+    <div class="col-6">
+        <app-dona [labels]="labels_1" [data]="data_1" title="Ventas"></app-dona>
+    </div>
+    <div class="col-6">
+        <app-dona [labels]="labels_2" [data]="data_2" title="Compras"></app-dona>
+    </div>
+    <div class="col-6">
+        <app-dona [labels]="labels_3" [data]="data_3" title="Porcentajes Ventas por empleado"></app-dona>
+    </div>
+    <div class="col-6">
+        <app-dona [labels]="labels_4" [data]="data_4" title="Porcentajes Compras por empleado"></app-dona>
     </div>
 </div>
