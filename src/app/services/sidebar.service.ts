@@ -13,9 +13,10 @@ export class SidebarService {
         { titulo: 'Main', url: '/'},
         { titulo: 'Progresos', url: 'progress'},
         { titulo: 'Graficas', url: 'grafica1'},
+        { titulo: 'Promesas', url: 'promesas' },
+        { titulo: 'RxJs', url: 'rxjs' }
       ]
     }
-
   ];
 
   constructor() { }
