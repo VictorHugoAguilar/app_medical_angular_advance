@@ -6,8 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
 import { PagesModule } from './pages/pages.module';
 
+// Components
 import { AppComponent } from './app.component';
-import { NoPageFoundComponent } from './pages/nopagefound/nopagefound.component';
+import { NoPageFoundComponent } from './errors/404/nopagefound.component';
 
 @NgModule({
   declarations: [
