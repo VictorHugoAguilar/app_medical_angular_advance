@@ -19,7 +19,7 @@ import { NoPageFoundComponent } from './errors/404/nopagefound.component';
     BrowserModule,
     AppRoutingModule,
     AuthModule,
-    PagesModule
+    PagesModule,
   ],
   bootstrap: [AppComponent]
 })
