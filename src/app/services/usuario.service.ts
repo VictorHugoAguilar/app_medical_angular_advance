@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { formLogin } from '../interface/login-form.interface';
 import { registerForm } from '../interface/register-form.interface';
+import { Usuario } from '../models/usuario.model';
 
 declare const gapi: any;
 
@@ -17,6 +18,7 @@ const base_url = environment.base_url;
 export class UsuarioService {
 
   public auth2: any;
+  public usuario: Usuario | undefined;
 
   constructor(private http: HttpClient,
     private router: Router,
@@ -25,7 +27,7 @@ export class UsuarioService {
   }
 
   googleInit() {
-    return new Promise<void>( resolve => {
+    return new Promise<void>(resolve => {
       gapi.load('auth2', () => {
         // Retrieve the singleton for the GoogleAuth library and set up the client.
         this.auth2 = gapi.auth2.init({
@@ -51,16 +53,23 @@ export class UsuarioService {
   validateToken(): Observable<boolean> {
     const token = localStorage.getItem('token') || '';
 
+    console.log('entrando en el validate token')
+
     return this.http.get(`${base_url}/login`, {
       headers: {
         'x-token': token
       }
     }).pipe(
-      tap((resp: any) => {
+      map((resp: any) => {
+        const { nombre, email, img = '', google, role, uid } = resp.usuario;
+        this.usuario = new Usuario(nombre, email, '', role, google, img, uid);
         localStorage.setItem('token', resp.token);
+        return true;
       }),
-      map((resp: any) => true),
-      catchError((error: any) => of(false))
+      catchError((error: any) => {
+        console.log(error);
+        return of(false);
+      })
     );
   }
 

@@ -144,8 +144,8 @@ File: scss
 }
 
 .topbar .profile-pic {
-  width: 30px;
-  border-radius: 100%;
+  width: 60px;
+  border-radius: 10px;
 }
 
 .topbar .dropdown-menu {
