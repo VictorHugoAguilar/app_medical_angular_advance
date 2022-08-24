@@ -1,1 +1,62 @@
-<p>perfil works!</p>
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Mi perfil de usuario</h4>
+                <h6 class="card-subtitle">Ajustes</h6>
+                <form class="form p-t-2" [formGroup]="perfilForm!" (submit)="actualizarPerfil()">
+                    <div class="form-group">
+                        <label for="nombre">Nombre de usuario</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input type="text" class="form-control" id="nombre" placeholder="Nombre usuario"
+                                formControlName="nombre">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input type="text" class="form-control" id="email" placeholder="Email usuario"
+                                formControlName="email">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block waves-effect waves-light m-r-10"
+                        [disabled]="perfilForm?.invalid"
+                    >
+                        <i class="fa fa-save"></i>
+                        Guardar cambiar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Avatar</h4>
+                <h6 class="card-subtitle">Imagen del usuario</h6>
+                
+                <div class="text-center">
+                    <img *ngIf="!imgTemp"  [src]="usuario.imageUrl" class="img-avatar">
+                    <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
+                </div>
+
+                <input type="file" (change)="changeImage($event)" />
+                <div class="mt-3">
+                    <button type="button" 
+                        class="btn btn-success btn-block waves-effect waves-light m-r-10" 
+                        [disabled]="!imageUpload"
+                        (click) = "uploadImage()"
+                        >
+                        <i class="fa fa-save"></i>
+                        Cambiar imagen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
