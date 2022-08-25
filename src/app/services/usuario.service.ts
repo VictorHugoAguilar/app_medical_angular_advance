@@ -114,9 +114,7 @@ export class UsuarioService {
       ...data,
       role: this.usuario?.role!
     }
-    
-    console.log('updatePerfil', data);
-
+    console.debug('updatePerfil', data);
     return this.http.put(`${base_url}/usuarios/${this.uid}`, data, {
       headers: {
         'x-token': this.token

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Event } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario.model';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-perfil',
@@ -33,40 +33,52 @@ export class PerfilComponent implements OnInit {
   }
 
   actualizarPerfil() {
-    console.log(this.perfilForm?.value);
-    this.usuarioService.updatePerfil(this.perfilForm?.value).subscribe(
-      resp => {
-        console.log(resp);
-        const { nombre, email } = this.perfilForm?.value;
-        this.usuario.nombre = nombre;
-        this.usuario.email = email;
-      });
+    const data = this.perfilForm?.value;
+    this.usuarioService
+      .updatePerfil(data)
+      .subscribe(
+        (resp) => {
+          const { nombre, email } = data;
+          this.usuario.nombre = nombre;
+          this.usuario.email = email;
+          console.debug(resp)
+          Swal.fire('Guardado', 'Los cambios han sido guardados correctamente', 'success');
+        }, (error) => {
+          Swal.fire('Error', error.error.msg, 'error');
+        }
+      );
   }
 
-  changeImage(event: any){
+  changeImage(event: any) {
+    console.log(event)
     const file = event.target!.files[0];
-    
-    if(file){
+
+    if (file) {
       this.imageUpload = file;
-    }else {
+    } else {
       this.imageUpload = undefined;
-      this.imgTemp =  undefined;
+      this.imgTemp = undefined;
       return;
     }
 
     const reader = new FileReader();
-    const url64 = reader.readAsDataURL( file);
+    const url64 = reader.readAsDataURL(file);
 
     reader.onloadend = () => {
       this.imgTemp = reader.result;
     }
   }
 
-  uploadImage(){
-    if(this.imageUpload && this.usuario.uid ){
+  uploadImage() {
+    if (this.imageUpload && this.usuario.uid) {
       this.fileUploadService.
         updateImage(this.imageUpload, 'usuarios', this.usuario.uid)
-        .then( img =>  this.usuario.img = img );
+        .then(img => {
+          this.usuario.img = img;
+          Swal.fire('Guardado', 'Imagen de usuario actualizada', 'success');
+        }).catch(err => {
+          Swal.fire('Error', 'No se ha podido actualizar la imagen del perfil', 'error');
+        });
     }
   }
 
