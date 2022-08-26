@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, delay, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { CargarUsuario } from '../interface/cargar-usuarios.interface';
 import { formLogin } from '../interface/login-form.interface';
 import { registerForm } from '../interface/register-form.interface';
 import { Usuario } from '../models/usuario.model';
@@ -32,6 +33,14 @@ export class UsuarioService {
 
   get uid(): string {
     return this.usuario?.uid || '';
+  }
+
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    }
   }
 
   googleInit() {
@@ -122,5 +131,31 @@ export class UsuarioService {
     });
   };
 
+  cargarUsuarios(desde: number = 0) {
+    const url = `${base_url}/usuarios?desde=${desde}&perPage=5`;
+    return this.http.get<CargarUsuario>(url, this.headers)
+      .pipe(
+        delay(200),
+        map(resp => {
+          const usuarios = resp.usuarios.map(user =>
+            new Usuario(user.nombre, user.email, '',
+              user.role, user.google, user.img, user.uid))
+
+          return {
+            total: resp.total,
+            usuarios
+          };
+        })
+      );
+  }
+
+  eliminarUsuario(usuario: Usuario)  {
+    const url = `${base_url}/usuarios/${usuario.uid}`;
+    return this.http.delete(url, this.headers);
+  }
+
+  guardarUsuario(usuario: Usuario) {
+    return this.http.put(`${base_url}/usuarios/${usuario.uid}`, usuario, this.headers);
+  };
 
 }
