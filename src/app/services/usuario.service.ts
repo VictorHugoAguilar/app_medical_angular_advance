@@ -58,11 +58,11 @@ export class UsuarioService {
 
   logout() {
     localStorage.removeItem('token');
-
+    localStorage.removeItem('menu');
     this.auth2.signOut().then(() => {
       this.ngZone.run(() => {
         this.router.navigateByUrl('/login');
-      })
+      });
       console.debug('User signed out.');
     });
   }
@@ -97,7 +97,7 @@ export class UsuarioService {
   };
 
   loginUser(formData: formLogin) {
-    console.debug('login user', formData);
+    // console.debug('login user', formData);
     return this.http.post(`${base_url}/login`, formData)
       .pipe(
         tap((resp: any) => {
@@ -107,7 +107,7 @@ export class UsuarioService {
   };
 
   loginGoogle(token: any) {
-    console.debug('login user', token);
+    // console.debug('login user', token);
     return this.http.post(`${base_url}/login/google`, { token })
       .pipe(
         tap((resp: any) => {
@@ -121,7 +121,7 @@ export class UsuarioService {
       ...data,
       role: this.usuario?.role!
     }
-    console.debug('updatePerfil', data);
+    // console.debug('updatePerfil', data);
     return this.http.put(`${base_url}/usuarios/${this.uid}`, data, {
       headers: {
         'x-token': this.token
@@ -138,7 +138,6 @@ export class UsuarioService {
           const usuarios = resp.usuarios.map(user =>
             new Usuario(user.nombre, user.email, '',
               user.role, user.google, user.img, user.uid))
-
           return {
             total: resp.total,
             usuarios
