@@ -68,4 +68,9 @@ export class BusquedasService {
         })
       );
   }
+
+  search(termino:string) {
+    const url = `${base_url}/busqueda/${termino}`;
+    return this.http.get<any[]>(url, this.headers);
+  }
 }
