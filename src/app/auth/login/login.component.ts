@@ -1,12 +1,12 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, AbstractControlOptions } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import Swal from 'sweetalert2';
 
-declare var gapi: any;
-
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { environment } from '../../../environments/environment';
+
+declare var gapi: any;
 
 @Component({
   selector: 'app-login',
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.usuarioService.loginUser(this.loginForm.value)
       .subscribe(resp => {
-        console.debug(resp);
+        // console.debug(resp);
         const remember = this.loginForm.get('remember')?.value || false;
         const email = this.loginForm.get('email')?.value || "";
         if (remember) {

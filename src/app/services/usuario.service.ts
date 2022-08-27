@@ -63,7 +63,7 @@ export class UsuarioService {
       this.ngZone.run(() => {
         this.router.navigateByUrl('/login');
       });
-      console.debug('User signed out.');
+      // console.debug('User signed out.');
     });
   }
 
