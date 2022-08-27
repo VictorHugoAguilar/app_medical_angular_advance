@@ -50,7 +50,6 @@ export class PerfilComponent implements OnInit {
   }
 
   changeImage(event: any) {
-    console.log(event)
     const file = event.target!.files[0];
 
     if (file) {

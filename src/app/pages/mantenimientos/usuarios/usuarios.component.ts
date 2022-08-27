@@ -40,8 +40,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
         delay(100)
       )
       .subscribe(
-        img => {
-          console.log(img);
+        () => {
           this.cargarUsuarios()
         }
       )
@@ -110,7 +109,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 
   cambiarRole(usuario: Usuario) {
     this.usuarioService.guardarUsuario(usuario)
-      .subscribe(resp => console.log(resp));
+      .subscribe(resp => console.debug(resp));
   }
 
   abrirModal(usuario: Usuario) {

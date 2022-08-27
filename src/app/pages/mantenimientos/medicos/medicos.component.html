@@ -2,13 +2,14 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <input type="text" class="form-control" placeholder="Buscar usuarios..." />
+                <input type="text" class="form-control" placeholder="Buscar medico..."
+                    (keyup)="searchMedical(txtMedical.value)" #txtMedical />
             </div>
         </div>
     </div>
 </div>
 
-<div class="row">
+<div class="row" *ngIf="cargando">
     <div class="col-12">
         <div class="aler alert-info text-center">
             <h4 class="alert-heading">Cargando</h4>
@@ -18,44 +19,53 @@
     </div>
 </div>
 
-<div class="col-12">
+<div class="col-12" *ngIf="!cargando">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Usuarios</h4>
-            <h6 class="card-subtitle">Usuarios registrado en la aplicación</h6>
+            <div class="row">
+                <div class="col-8">
+                    <h4 class="card-title">Medicos {{ medicos?.length }}</h4>
+                    <h6 class="card-subtitle">Usuarios registrado en la aplicación</h6>
+                </div>
+                <div class="col">
+                    <div class="text-right">
+                        <a class="btn btn-primary" routerLink="/dashboard/medico/nuevo">
+                            <i class="fa fa-hospital-o"></i>
+                            Crear nuevo médico
+                        </a>
+                    </div>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Avatar</th>
-                            <th>Correo</th>
                             <th>Nombre</th>
-                            <th>Role</th>
-                            <th>Auth</th>
                             <th class="text-nowrap">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="text-nowrap">
-                                <a data-togle="tooltip" data-original-title="Editar"><i
-                                        class="fa fa-pencil text-inverse"></i></a>
-                                <a data-togle="tooltip" data-original-title="Borrar"><i
-                                        class="fa fa-close text-danger"></i></a>
+                        <tr *ngFor="let medico of medicos">
+                            <td>
+                                <img [src]="medico.img! | imagen:'medicos' " [alt]="medico.nombre" class="avatar cursor"
+                                    (click)="abrirModal(medico)" />
                             </td>
-
+                            <td> {{ medico?.nombre }} </td>
+                            <td class="text-nowrap">
+                                <a [routerLink]="['/dashboard', 'medico', medico.uid]" data-togle="tooltip"
+                                    data-original-title="Editar">
+                                    <i class="fa fa-pencil text-inverse"></i>
+                                </a>
+                                &nbsp;
+                                <a class="cursor" (click)="deleteMedical(medico)"  data-togle="tooltip" data-original-title="Borrar">
+                                    <i class="fa fa-close text-danger"></i>
+                                </a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <button class="btn btn-secondary">Anterior</button>
-            &nbsp;
-            <button class="btn btn-secondary">Siguientes</button>
         </div>
     </div>
 </div>

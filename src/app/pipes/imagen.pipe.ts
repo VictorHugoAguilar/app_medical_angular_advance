@@ -10,13 +10,13 @@ export class ImagenPipe implements PipeTransform {
 
   transform(img: string, tipo: 'usuarios' | 'hospitales' | 'medicos'): string {
     if (!img) {
-      return `${base_url}/upload/hospitales/not-image`;
+      return `${base_url}/upload/${tipo}/not-image`;
     } else if (img?.includes('https')) {
       return img;
     } else if (img) {
-      return `${base_url}/upload/hospitales/${img}`;
+      return `${base_url}/upload/${tipo}/${img}`;
     } else {
-      return `${base_url}/upload/hospitales/not-image`;
+      return `${base_url}/upload/${tipo}/not-image`;
     }
   }
 

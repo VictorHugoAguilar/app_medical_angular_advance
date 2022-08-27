@@ -63,13 +63,11 @@ export class UsuarioService {
       this.ngZone.run(() => {
         this.router.navigateByUrl('/login');
       })
-      console.log('User signed out.');
+      console.debug('User signed out.');
     });
   }
 
   validateToken(): Observable<boolean> {
-    console.log('entrando en el validate token')
-
     return this.http.get(`${base_url}/login`, {
       headers: {
         'x-token': this.token
@@ -82,7 +80,7 @@ export class UsuarioService {
         return true;
       }),
       catchError((error: any) => {
-        console.log(error);
+        console.error(error);
         return of(false);
       })
     );

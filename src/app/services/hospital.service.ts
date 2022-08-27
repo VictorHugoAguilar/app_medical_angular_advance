@@ -12,8 +12,6 @@ const base_url = environment.base_url;
 })
 export class HospitalService {
 
-
-
   constructor(private http: HttpClient,
     private router: Router,
     private ngZone: NgZone) { }
@@ -31,7 +29,7 @@ export class HospitalService {
   }
 
   cargarHospitales(desde: number = 0) {
-    const url = `${base_url}/hospitales?desde=${desde}&perPage=5`;
+    const url = `${base_url}/hospitales`;
     return this.http.get<any>(url, this.headers)
       .pipe(
         map((resp: { ok: boolean, hospitales: Hospital[] }) => resp.hospitales)

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Hospital } from 'src/app/models/hospital.model';
 import { delay } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { BusquedasService } from 'src/app/services/busquedas.service';
   styles: [
   ]
 })
-export class HospitalesComponent implements OnInit {
+export class HospitalesComponent implements OnInit, OnDestroy {
 
   public hospitales!: Hospital[];
   public hospitalesTemp!: Hospital[];
@@ -37,11 +37,13 @@ export class HospitalesComponent implements OnInit {
       )
       .subscribe(
         img => {
-          console.log(img);
           this.cargarHospitales()
         }
       )
+  }
 
+  ngOnDestroy(): void {
+    this.imgSubs.unsubscribe();
   }
 
   cargarHospitales() {
@@ -55,7 +57,6 @@ export class HospitalesComponent implements OnInit {
   }
 
   guardarCambios(hospital: Hospital) {
-    console.log(hospital)
     this.hospitalService.modificarHospital(hospital.uid!, hospital.nombre)
       .subscribe(resp => {
         Swal.fire('Actualizado', hospital.nombre, 'success');
@@ -63,7 +64,6 @@ export class HospitalesComponent implements OnInit {
   }
 
   eliminarHospital(hospital: Hospital) {
-    console.log(hospital)
     this.hospitalService.borrarHospital(hospital.uid!)
       .subscribe(resp => {
         Swal.fire('Borrado', hospital.nombre, 'success');
@@ -72,7 +72,6 @@ export class HospitalesComponent implements OnInit {
   }
 
   async crearHospital() {
-    console.log('creando nuevo hospital');
     const { value } = await Swal.fire({
       title: 'Crear hospital',
       text: 'Ingrese el nombre del nuevo hospital',
@@ -93,7 +92,6 @@ export class HospitalesComponent implements OnInit {
   }
 
   searchHospital(termino: string) {
-    console.log(termino)
     if (termino.length === 0) {
       this.hospitales = this.hospitalesTemp;
       return;
