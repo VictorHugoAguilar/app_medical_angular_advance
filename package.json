@@ -1,6 +1,7 @@
 {
   "name": "admin-pro",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Front-End app for app medical",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,6 +9,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
+  "author": "Victor Hugo Aguilar",
+  "license": "ISC",
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.0.3",

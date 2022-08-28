@@ -36,7 +36,7 @@ export class UsuarioService {
   }
 
   get role(): 'ADMIN_ROLE' | 'USER_ROLE' {
-      return this.usuario?.role || 'USER_ROLE';
+    return this.usuario?.role || 'USER_ROLE';
   }
 
   get headers() {
@@ -101,11 +101,12 @@ export class UsuarioService {
   };
 
   loginUser(formData: formLogin) {
-    // console.debug('login user', formData);
+    console.debug('login user', formData);
+    console.debug('base_url', `${base_url}/login`)
     return this.http.post(`${base_url}/login`, formData)
       .pipe(
         tap((resp: any) => {
-        this.guardarLocalStorage(resp.token, resp.menu);
+          this.guardarLocalStorage(resp.token, resp.menu);
         })
       );
   };
@@ -150,7 +151,7 @@ export class UsuarioService {
       );
   }
 
-  eliminarUsuario(usuario: Usuario)  {
+  eliminarUsuario(usuario: Usuario) {
     const url = `${base_url}/usuarios/${usuario.uid}`;
     return this.http.delete(url, this.headers);
   }
@@ -159,9 +160,9 @@ export class UsuarioService {
     return this.http.put(`${base_url}/usuarios/${usuario.uid}`, usuario, this.headers);
   };
 
-  guardarLocalStorage(token:string, menu:any){
-    localStorage.setItem('token',  token);
-    localStorage.setItem('menu',  JSON.stringify(menu));
+  guardarLocalStorage(token: string, menu: any) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('menu', JSON.stringify(menu));
   }
 
 }
