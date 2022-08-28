@@ -35,6 +35,10 @@ export class UsuarioService {
     return this.usuario?.uid || '';
   }
 
+  get role(): 'ADMIN_ROLE' | 'USER_ROLE' {
+      return this.usuario?.role || 'USER_ROLE';
+  }
+
   get headers() {
     return {
       headers: {
