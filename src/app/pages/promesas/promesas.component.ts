@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Usuarios } from 'src/app/interface/usuarios-promesas';
 
 @Component({
   selector: 'app-promesas',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class PromesasComponent implements OnInit {
+
+  public usuarios: Usuarios[] = [];
 
   constructor() { }
 
@@ -34,12 +37,15 @@ export class PromesasComponent implements OnInit {
     console.log('Fin del init');
     */
 
-    this.getUsuarios().then( usuarios => console.log(usuarios));
+    this.getUsuarios().then( (usuarios:Usuarios[]) => {
+      console.log( usuarios )
+      this.usuarios = usuarios;
+    });
 
   }
 
   getUsuarios() {
-    const promesa = new Promise( resolve => {
+    const promesa = new Promise<Usuarios[]>( (resolve ) => {
       fetch('https://jsonplaceholder.typicode.com/users')
         .then(resp => resp.json())
         .then(body => resolve(body))
