@@ -32,7 +32,7 @@ export class BusquedaComponent implements OnInit {
   search(termino: string) {
     this.servicioBusqueda.search(termino)
       .subscribe((resp: any) => {
-        console.log(resp)
+        // console.debug('result of search -> ', resp);
         if (resp.usuarios.length === 0 &&
           resp.hospitales.length === 0 &&
           resp.medicos.length === 0

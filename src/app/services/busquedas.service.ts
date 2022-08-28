@@ -9,23 +9,34 @@ import { Usuario } from '../models/usuario.model';
 
 const base_url = environment.base_url;
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class BusquedasService {
 
   constructor(private http: HttpClient) { }
 
-  get token(): string {
-    return localStorage.getItem('token') || '';
+  search(termino: string) {
+    const url = `${base_url}/busqueda/${termino}`;
+    return this.http.get<any[]>(url);
   }
 
-  get headers() {
-    return {
-      headers: {
-        'x-token': this.token
-      }
-    }
+  buscar(tipo: 'usuarios' | 'medicos' | 'hospitales',
+    termino: string) {
+    const url = `${base_url}/busqueda/${tipo}/${termino}`;
+    return this.http.get<any[]>(url)
+      .pipe(
+        map((res: any) => {
+          switch (tipo) {
+            case 'usuarios':
+              return this.transformarUsuarios(res.resultado);
+            case 'hospitales':
+              return this.transformarHospitales(res.resultado);
+            case 'medicos':
+              return this.transformarMedicos(res.resultado);
+            default:
+              return [];
+          }
+        })
+      );
   }
 
   private transformarUsuarios(resultados: any[]): any[] {
@@ -46,31 +57,4 @@ export class BusquedasService {
     })
   }
 
-  buscar(tipo: 'usuarios' | 'medicos' | 'hospitales',
-    termino: string) {
-    const url = `${base_url}/busqueda/${tipo}/${termino}`;
-    return this.http.get<any[]>(url, this.headers)
-      .pipe(
-        map((res: any) => {
-          switch (tipo) {
-            case 'usuarios':
-              return this.transformarUsuarios(res.resultado);
-              break;
-            case 'hospitales':
-              return this.transformarHospitales(res.resultado);
-              break;
-              case 'medicos':
-                return this.transformarMedicos(res.resultado);
-                break;
-            default:
-              return [];
-          }
-        })
-      );
-  }
-
-  search(termino:string) {
-    const url = `${base_url}/busqueda/${termino}`;
-    return this.http.get<any[]>(url, this.headers);
-  }
 }

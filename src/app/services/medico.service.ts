@@ -1,35 +1,19 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Medico } from '../models/medico.model';
 
-
 const base_url = environment.base_url;
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class MedicoService {
 
-  constructor(private http: HttpClient
-  ) { }
-
-  get token(): string {
-    return localStorage.getItem('token') || '';
-  }
-
-  get headers() {
-    return {
-      headers: {
-        'x-token': this.token
-      }
-    }
-  }
+  constructor(private http: HttpClient) { }
 
   cargarMedicos(desde: number = 0) {
     const url = `${base_url}/medicos`;
-    return this.http.get<any>(url, this.headers)
+    return this.http.get<any>(url)
       .pipe(
         map((resp: { ok: boolean, medicos: Medico[] }) => resp.medicos)
       )
@@ -37,7 +21,7 @@ export class MedicoService {
 
   cargarMedicoPorId(id: string) {
     const url = `${base_url}/medicos${id}`;
-    return this.http.get<any>(url, this.headers)
+    return this.http.get<any>(url)
       .pipe(
         map((resp: { ok: boolean, medico: Medico }) => resp.medico)
       )
@@ -45,7 +29,7 @@ export class MedicoService {
 
   crearMedico(medico: { nombre: string, hospital: string }) {
     const url = `${base_url}/medicos/`;
-    return this.http.post<any>(url, medico, this.headers)
+    return this.http.post<any>(url, medico)
       .pipe(
         map((resp: { ok: boolean, medico: Medico }) => resp.medico)
       )
@@ -54,7 +38,7 @@ export class MedicoService {
   cargarMedico(idMedico: string) {
     const url = `${base_url}/medicos/${idMedico}`;
 
-    return this.http.get<any>(url, this.headers)
+    return this.http.get<any>(url)
       .pipe(
         map((resp: { ok: boolean, medico: Medico }) => resp.medico)
       )
@@ -66,7 +50,7 @@ export class MedicoService {
     return this.http.put<any>(url, {
       nombre: data.nombre,
       hospital: data.hospital
-    }, this.headers)
+    })
       .pipe(
         map((resp: { ok: boolean, medico: Medico }) => resp.medico)
       )
@@ -74,11 +58,10 @@ export class MedicoService {
 
   borrarHospital(_id: string) {
     const url = `${base_url}/medicos/${_id}`;
-    return this.http.delete<any>(url, this.headers)
+    return this.http.delete<any>(url)
       .pipe(
         map((resp: { ok: boolean, medico: Medico }) => resp.medico)
       )
   }
-
 
 }

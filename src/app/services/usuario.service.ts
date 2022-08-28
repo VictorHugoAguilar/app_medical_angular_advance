@@ -13,9 +13,7 @@ declare const gapi: any;
 
 const base_url = environment.base_url;
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class UsuarioService {
 
   public auth2: any;
@@ -73,6 +71,7 @@ export class UsuarioService {
 
   validateToken(): Observable<boolean> {
     return this.http.get(`${base_url}/login`, {
+      // the headers are introduced by the interceptor but at the moment I don't remove it from here 
       headers: {
         'x-token': this.token
       }
@@ -128,6 +127,7 @@ export class UsuarioService {
     }
     // console.debug('updatePerfil', data);
     return this.http.put(`${base_url}/usuarios/${this.uid}`, data, {
+      // the headers are introduced by the interceptor but at the moment I don't remove it from here 
       headers: {
         'x-token': this.token
       }
@@ -136,6 +136,7 @@ export class UsuarioService {
 
   cargarUsuarios(desde: number = 0) {
     const url = `${base_url}/usuarios?desde=${desde}&perPage=5`;
+    // the headers are introduced by the interceptor but at the moment I don't remove it from here 
     return this.http.get<CargarUsuario>(url, this.headers)
       .pipe(
         delay(200),
@@ -153,10 +154,12 @@ export class UsuarioService {
 
   eliminarUsuario(usuario: Usuario) {
     const url = `${base_url}/usuarios/${usuario.uid}`;
+    // the headers are introduced by the interceptor but at the moment I don't remove it from here 
     return this.http.delete(url, this.headers);
   }
 
   guardarUsuario(usuario: Usuario) {
+    // the headers are introduced by the interceptor but at the moment I don't remove it from here 
     return this.http.put(`${base_url}/usuarios/${usuario.uid}`, usuario, this.headers);
   };
 
